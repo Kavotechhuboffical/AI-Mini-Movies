@@ -1,1 +1,23 @@
-
+{
+  "title": "He Left Work To Help A Stranger",
+  "characters": {
+    "rich": {"name": "KWAME", "voice": "am_onyx", "color": "&H0037AFD4"},
+    "poor": {"name": "KOFI", "voice": "am_michael", "color": "&H00FFFFFF"},
+    "narrator": {"name": "", "voice": "am_fenrir", "color": "&H0000D7FF"}
+  },
+  "lines": [
+    {"who": "rich", "text": "Kofi. Security says you left the gate yesterday. Explain.", "gesture": "point"},
+    {"who": "poor", "text": "An old man fell outside, boss. His bus money was gone.", "gesture": "open"},
+    {"who": "rich", "text": "So you lost two hours of work for a stranger?", "gesture": "point"},
+    {"who": "poor", "text": "He was alone. I paid for his taxi and walked him home.", "gesture": "open"},
+    {"who": "rich", "text": "Nobody does that. Not in this city.", "gesture": "none"},
+    {"who": "poor", "text": "Maybe that is why he cried.", "gesture": "open"},
+    {"who": "rich", "text": "He cried?", "gesture": "none"},
+    {"who": "poor", "text": "He said his son never visits. He lost his number years ago.", "gesture": "open"},
+    {"who": "rich", "text": "What was his name?", "gesture": "none"},
+    {"who": "poor", "text": "Mister Mensah. Blue cap. He lives near the old market.", "gesture": "open"},
+    {"who": "rich", "text": "My father wears a blue cap. Mensah is my family name.", "gesture": "none"},
+    {"who": "narrator", "text": "Kwame had not spoken to his father in nine years. That evening, he drove to the old market.", "gesture": "none"},
+    {"who": "narrator", "text": "One small kindness can bring a whole family home.", "gesture": "none"}
+  ]
+}
