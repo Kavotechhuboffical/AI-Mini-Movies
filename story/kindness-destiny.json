@@ -1,0 +1,436 @@
+{
+ "title": "Kindness Never Ruins Destiny",
+ "end_card": "Never stop being kind.\nYou never know where your kindness may lead you.",
+ "characters": {
+  "woman": {
+   "name": "AMA",
+   "voice": "af_heart",
+   "speed": 0.95,
+   "color": "&H009B8CFF",
+   "look": {
+    "gender": 0.0,
+    "age": 0.5,
+    "weight": 0.4,
+    "muscle": 0.35,
+    "height": 0.5,
+    "race": "african",
+    "skin": [
+     "young african female",
+     "african female",
+     "female"
+    ],
+    "clothes": [
+     [
+      "female_casualsuit01",
+      "female_casualsuit02",
+      "female"
+     ],
+     [
+      "shoes01"
+     ]
+    ],
+    "hair": [
+     "long01",
+     "ponytail01",
+     "bob01"
+    ],
+    "tint": {
+     "casualsuit": [
+      0.75,
+      0.04,
+      0.05
+     ]
+    }
+   }
+  },
+  "oldman": {
+   "name": "OLD MAN",
+   "voice": "am_adam",
+   "speed": 0.85,
+   "color": "&H0080D0FF",
+   "look": {
+    "gender": 1.0,
+    "age": 0.9,
+    "weight": 0.45,
+    "muscle": 0.35,
+    "height": 0.45,
+    "race": "african",
+    "skin": [
+     "old african male",
+     "middleage african male",
+     "african male"
+    ],
+    "clothes": [
+     [
+      "male_casualsuit03",
+      "male_casualsuit01",
+      "male"
+     ],
+     [
+      "shoes03",
+      "shoes01"
+     ]
+    ],
+    "hair": [
+     "short01",
+     "short02"
+    ],
+    "tint": {
+     "short": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    }
+   }
+  },
+  "manager": {
+   "name": "MANAGER",
+   "voice": "am_onyx",
+   "speed": 0.95,
+   "color": "&H0037AFD4",
+   "look": {
+    "gender": 1.0,
+    "age": 0.6,
+    "weight": 0.62,
+    "muscle": 0.45,
+    "height": 0.6,
+    "race": "african",
+    "skin": [
+     "middleage african male",
+     "african male",
+     "male"
+    ],
+    "clothes": [
+     [
+      "male_elegantsuit01"
+     ],
+     [
+      "shoes01"
+     ]
+    ],
+    "hair": [
+     "short02",
+     "short01"
+    ]
+   }
+  },
+  "narrator": {
+   "name": "",
+   "voice": "am_fenrir",
+   "speed": 0.95,
+   "color": "&H0000D7FF"
+  }
+ },
+ "scenes": [
+  {
+   "id": 1,
+   "set": "car",
+   "cast": {
+    "woman": "center"
+   },
+   "items": [
+    {
+     "pause": 2.1,
+     "shot": "woman"
+    },
+    {
+     "who": "narrator",
+     "text": "She had an important interview that morning, and she couldn't afford to be late.",
+     "gesture": "none",
+     "shot": "woman"
+    },
+    {
+     "pause": 2.1,
+     "shot": "woman"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "set": "car",
+   "cast": {
+    "woman": "center"
+   },
+   "items": [
+    {
+     "pause": 3.9,
+     "shot": "woman"
+    },
+    {
+     "who": "woman",
+     "text": "Please, can you stop here?",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "pause": 3.9,
+     "shot": "woman"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "set": "street",
+   "cast": {
+    "woman": "center"
+   },
+   "items": [
+    {
+     "pause": 1.7,
+     "shot": ""
+    },
+    {
+     "who": "narrator",
+     "text": "She knew that even a few minutes could cost her the opportunity she'd been waiting for.",
+     "gesture": "none",
+     "shot": ""
+    },
+    {
+     "pause": 1.7,
+     "shot": ""
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "set": "street",
+   "cast": {
+    "woman": "left",
+    "oldman": "right"
+   },
+   "items": [
+    {
+     "pause": 3.9,
+     "shot": "oldman"
+    },
+    {
+     "who": "oldman",
+     "text": "Please, I need some help.",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "pause": 3.9,
+     "shot": "woman"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "set": "street",
+   "cast": {
+    "woman": "left",
+    "oldman": "right"
+   },
+   "items": [
+    {
+     "pause": 4.5,
+     "shot": "woman"
+    },
+    {
+     "who": "narrator",
+     "text": "She had every reason to walk away.",
+     "gesture": "none",
+     "shot": ""
+    },
+    {
+     "pause": 4.5,
+     "shot": "woman"
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "set": "street",
+   "cast": {
+    "woman": "left",
+    "oldman": "right"
+   },
+   "items": [
+    {
+     "pause": 5.4,
+     "shot": ""
+    },
+    {
+     "who": "oldman",
+     "text": "Thank you.",
+     "gesture": "none",
+     "shot": ""
+    },
+    {
+     "who": "woman",
+     "text": "It's okay.",
+     "gesture": "none",
+     "shot": ""
+    },
+    {
+     "pause": 5.4,
+     "shot": ""
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "set": "office_desk",
+   "cast": {
+    "woman": "left",
+    "manager": "right"
+   },
+   "items": [
+    {
+     "pause": 6.6,
+     "shot": "woman"
+    },
+    {
+     "who": "woman",
+     "text": "I'm sorry I'm late.",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "who": "manager",
+     "text": "You're late.",
+     "gesture": "point",
+     "shot": ""
+    },
+    {
+     "who": "woman",
+     "text": "I'm sorry, I had to.",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "who": "manager",
+     "text": "Get out.",
+     "gesture": "point",
+     "shot": ""
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "set": "office",
+   "cast": {
+    "woman": "center"
+   },
+   "items": [
+    {
+     "pause": 4.7,
+     "shot": "woman"
+    },
+    {
+     "who": "narrator",
+     "text": "She thought the opportunity was gone.",
+     "gesture": "none",
+     "shot": "woman"
+    },
+    {
+     "pause": 4.7,
+     "shot": "woman"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "set": "office_desk",
+   "cast": {
+    "manager": "right"
+   },
+   "items": [
+    {
+     "pause": 6.1,
+     "shot": "manager"
+    },
+    {
+     "who": "manager",
+     "text": "Wait.",
+     "gesture": "none",
+     "shot": ""
+    },
+    {
+     "pause": 6.1,
+     "shot": "manager"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "set": "office",
+   "cast": {
+    "woman": "left",
+    "manager": "right"
+   },
+   "items": [
+    {
+     "who": "manager",
+     "text": "You're the woman who helped my father?",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "who": "woman",
+     "text": "Your father?",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "who": "manager",
+     "text": "The old man you helped outside.",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "pause": 8.2,
+     "shot": ""
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "set": "office",
+   "cast": {
+    "woman": "left",
+    "manager": "right"
+   },
+   "items": [
+    {
+     "who": "manager",
+     "text": "My father told me what you did.",
+     "gesture": "open",
+     "shot": ""
+    },
+    {
+     "pause": 3.6,
+     "shot": "woman"
+    },
+    {
+     "who": "manager",
+     "text": "That's the kind of person we need here. I'm giving you the opportunity.",
+     "gesture": "open",
+     "shot": ""
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "set": "office",
+   "cast": {
+    "woman": "left",
+    "manager": "right"
+   },
+   "items": [
+    {
+     "pause": 2.5,
+     "shot": "woman"
+    },
+    {
+     "who": "narrator",
+     "text": "Sometimes, the kindness you give when nobody is watching becomes the very reason your destiny changes.",
+     "gesture": "none",
+     "shot": ""
+    }
+   ]
+  }
+ ]
+}
