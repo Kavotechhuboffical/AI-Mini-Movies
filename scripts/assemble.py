@@ -1,4 +1,4 @@
-"""Subtitles (ASS) + FFmpeg assembly into a vertical Short."""
+"""Subtitles (ASS) + FFmpeg assembly into a vertical video."""
 import json, sys, subprocess
 
 story = json.load(open(sys.argv[1]))
@@ -16,9 +16,15 @@ ass = ["[Script Info]", "PlayResX: 1080", "PlayResY: 1920", "",
        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV",
        "Style: D,DejaVu Sans,62,&H00FFFFFF,&H00000000,&H80000000,1,5,2,2,70,70,330",
        "Style: T,DejaVu Sans,78,&H0000D7FF,&H00000000,&H80000000,1,6,3,8,60,60,140",
+       "Style: C,DejaVu Sans,64,&H00FFFFFF,&H00000000,&H80000000,1,6,3,5,70,70,100",
        "", "[Events]", "Format: Layer, Start, End, Style, Text"]
 ass.append(f"Dialogue: 0,{ts(0)},{ts(2.6)},T,{story['title'].upper()}")
 for ln in tl["lines"]:
+    if ln.get("card"):
+        ass.append(f"Dialogue: 0,{ts(ln['start'])},{ts(ln['end'])},C,{ln['card'].replace(chr(10), chr(92) + 'N')}")
+        continue
+    if not ln["text"]:
+        continue
     ch = story["characters"][ln["who"]]
     name = f"{{\\c{ch['color']}}}{ch['name']}{{\\c&H00FFFFFF}}\\N" if ch["name"] else f"{{\\c{ch['color']}}}"
     ass.append(f"Dialogue: 0,{ts(ln['start'])},{ts(ln['end'] + 0.2)},D,{name}{ln['text']}")
