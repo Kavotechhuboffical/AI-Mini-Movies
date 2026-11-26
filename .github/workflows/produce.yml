@@ -3,8 +3,11 @@ name: Produce episode
 on:
   workflow_dispatch:
     inputs:
+      episode:
+        description: "story file to make"
+        default: story/kindness-destiny.json
       mode:
-        description: "still = 4 test frames, full = whole video"
+        description: "still = one test picture per scene, full = whole video"
         default: full
         type: choice
         options: [full, still]
@@ -16,8 +19,8 @@ on:
         default: "1"
 
 env:
-  BLENDER_VER: "4.5.17"
-  EPISODE: story/episode02.json
+  BLENDER_VER: "4.5.11"
+  EPISODE: ${{ inputs.episode }}
   CHUNKS: 20
 
 jobs:
@@ -56,14 +59,15 @@ jobs:
         if: steps.go.outputs.run == 'true'
         with:
           path: cache
-          key: tools-${{ env.BLENDER_VER }}-v1
+          key: tools-${{ env.BLENDER_VER }}-v3
       - name: Download Blender, MPFB2, MakeHuman CC0 assets, HDRI
         if: steps.go.outputs.run == 'true'
         run: |
           sudo apt-get install -y aria2 >/dev/null
           mkdir -p cache && cd cache
           A='aria2c -x16 -s16 -k1M --summary-interval=5 --console-log-level=warn --max-tries=10 --retry-wait=5'
-          [ -f blender.tar.xz ] || curl -L --progress-meter --retry 5 --retry-all-errors --speed-limit 50000 --speed-time 30 -o blender.tar.xz https://download.blender.org/release/Blender4.5/blender-${BLENDER_VER}-linux-x64.tar.xz
+          [ -f blender.tar.xz ] && ! xz -t blender.tar.xz 2>/dev/null && rm -f blender.tar.xz
+          [ -f blender.tar.xz ] || curl -fL --progress-meter --retry 5 --retry-all-errors --speed-limit 50000 --speed-time 30 -o blender.tar.xz https://download.blender.org/release/Blender4.5/blender-${BLENDER_VER}-linux-x64.tar.xz
           [ -f mpfb.zip ] || curl -L --progress-meter --retry 5 --retry-all-errors --speed-limit 50000 --speed-time 30 -o mpfb.zip "https://extensions.blender.org/download/sha256:c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad/add-on-mpfb-v2.0.18.zip?repository=%2Fapi%2Fv1%2Fextensions%2F&blender_version_min=4.2.0"
           [ -f sys.zip ] || $A -o sys.zip https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip
           [ -f clo.zip ] || $A -o clo.zip https://files2.makehumancommunity.org/asset_packs/system_clothes_materials01/system_clothes_materials01_cc0.zip
@@ -96,11 +100,12 @@ jobs:
       - name: Render
         if: steps.go.outputs.run == 'true'
         run: |
+          set -o pipefail
           TL=out/audio/timeline.json
           N=$(python3 -c "import json;print(json.load(open('$TL'))['frames'])")
           S=$(( N * ${{ matrix.chunk }} / CHUNKS + 1 )); E=$(( N * (${{ matrix.chunk }} + 1) / CHUNKS ))
           EXTRA=""; [ "${{ inputs.mode }}" = "still" ] && EXTRA="--still 1"
-          ./blender/blender -b -P scripts/build_scene.py -- --timeline $TL --out out/frames --start $S --end $E \
+          ./blender/blender -b -P scripts/build_scene.py -- --story $EPISODE --timeline $TL --out out/frames --start $S --end $E \
             --hdri cache/hdri.hdr --samples ${{ inputs.samples }} --jaw ${{ inputs.jaw }} --armside ${{ inputs.armside }} $EXTRA 2>&1 | grep -v "^Fra:" | tail -400
           ls out/frames | wc -l
       - uses: actions/upload-artifact@v4
@@ -118,6 +123,9 @@ jobs:
         with: { pattern: "frames-*", path: out/frames, merge-multiple: true }
       - uses: actions/download-artifact@v4
         with: { name: audio, path: out/audio }
-      - run: python3 scripts/assemble.py $EPISODE out/audio/timeline.json out/frames out/audio/dialogue.wav episode02.mp4
+      - run: |
+          OUT=$(basename $EPISODE .json).mp4
+          python3 scripts/assemble.py $EPISODE out/audio/timeline.json out/frames out/audio/dialogue.wav $OUT
+          echo "OUT=$OUT" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
-        with: { name: video, path: episode02.mp4 }
+        with: { name: video, path: "${{ env.OUT }}" }
