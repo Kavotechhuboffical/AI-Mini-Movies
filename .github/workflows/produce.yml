@@ -59,7 +59,7 @@ jobs:
         if: steps.go.outputs.run == 'true'
         with:
           path: cache
-          key: tools-${{ env.BLENDER_VER }}-v3
+          key: tools-${{ env.BLENDER_VER }}-v4
       - name: Download Blender, MPFB2, MakeHuman CC0 assets, HDRI
         if: steps.go.outputs.run == 'true'
         run: |
@@ -67,7 +67,16 @@ jobs:
           mkdir -p cache && cd cache
           A='aria2c -x16 -s16 -k1M --summary-interval=5 --console-log-level=warn --max-tries=10 --retry-wait=5'
           [ -f blender.tar.xz ] && ! xz -t blender.tar.xz 2>/dev/null && rm -f blender.tar.xz
-          [ -f blender.tar.xz ] || curl -fL --progress-meter --retry 5 --retry-all-errors --speed-limit 50000 --speed-time 30 -o blender.tar.xz https://download.blender.org/release/Blender4.5/blender-${BLENDER_VER}-linux-x64.tar.xz
+          if [ ! -f blender.tar.xz ]; then
+            F=Blender4.5/blender-${BLENDER_VER}-linux-x64.tar.xz
+            for M in https://mirrors.ocf.berkeley.edu/blender/release https://ftp.nluug.nl/pub/graphics/blender/release https://download.blender.org/release; do
+              echo "Trying $M"
+              rm -f blender.tar.xz
+              curl -fL -A "Mozilla/5.0" --retry 3 --retry-all-errors -o blender.tar.xz "$M/$F" && xz -t blender.tar.xz && break
+              rm -f blender.tar.xz
+            done
+            [ -f blender.tar.xz ] || { echo "All Blender mirrors failed"; exit 1; }
+          fi
           [ -f mpfb.zip ] || curl -L --progress-meter --retry 5 --retry-all-errors --speed-limit 50000 --speed-time 30 -o mpfb.zip "https://extensions.blender.org/download/sha256:c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad/add-on-mpfb-v2.0.18.zip?repository=%2Fapi%2Fv1%2Fextensions%2F&blender_version_min=4.2.0"
           [ -f sys.zip ] || $A -o sys.zip https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip
           [ -f clo.zip ] || $A -o clo.zip https://files2.makehumancommunity.org/asset_packs/system_clothes_materials01/system_clothes_materials01_cc0.zip
