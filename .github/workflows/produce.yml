@@ -27,15 +27,15 @@ jobs:
   audio:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with: { python-version: "3.11" }
       - run: sudo apt-get update && sudo apt-get install -y espeak-ng
       - run: |
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install kokoro soundfile numpy
       - run: python scripts/gen_audio.py $EPISODE out/audio
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: audio, path: out/audio }
 
   render:
@@ -47,15 +47,15 @@ jobs:
       matrix:
         chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         if: inputs.mode == 'full' || matrix.chunk == 0
       - name: Skip other chunks in still mode
         id: go
         run: echo "run=${{ inputs.mode == 'full' || matrix.chunk == 0 }}" >> $GITHUB_OUTPUT
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         if: steps.go.outputs.run == 'true'
         with: { name: audio, path: out/audio }
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         if: steps.go.outputs.run == 'true'
         with:
           path: cache
@@ -117,7 +117,7 @@ jobs:
           ./blender/blender -b -P scripts/build_scene.py -- --story $EPISODE --timeline $TL --out out/frames --start $S --end $E \
             --hdri cache/hdri.hdr --samples ${{ inputs.samples }} --jaw ${{ inputs.jaw }} --armside ${{ inputs.armside }} $EXTRA 2>&1 | grep -v "^Fra:" | tail -400
           ls out/frames | wc -l
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: steps.go.outputs.run == 'true'
         with: { name: "frames-${{ matrix.chunk }}", path: out/frames }
 
@@ -126,15 +126,15 @@ jobs:
     if: inputs.mode == 'full'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { pattern: "frames-*", path: out/frames, merge-multiple: true }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: audio, path: out/audio }
       - run: |
           OUT=$(basename $EPISODE .json).mp4
           python3 scripts/assemble.py $EPISODE out/audio/timeline.json out/frames out/audio/dialogue.wav $OUT
           echo "OUT=$OUT" >> $GITHUB_ENV
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: video, path: "${{ env.OUT }}" }
